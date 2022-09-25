@@ -14,6 +14,9 @@ public class Movement : MonoBehaviour
         public string forward = "forward";
         public string strafe = "strafe";
         public string sprint = "sprint";
+        public string aim = "aim";
+        public string pullstring = "pullstring";
+        public string fire = "fire";
     }
     [SerializeField] // dong tuan tu hoa
     CharacterSetting setting;   
@@ -31,6 +34,18 @@ public class Movement : MonoBehaviour
     public void CharacterSprint(bool isSprinting)
     {
         anim.SetBool(setting.sprint, isSprinting);
+    }
+    public void CharacterAim(bool isAiming)
+    {
+        anim.SetBool(setting.aim, isAiming);
+    }
+    public void CharacterPullString(bool pullstring)
+    {
+        anim.SetBool(setting.pullstring, pullstring);
+    }
+    public void CharacterFire()
+    {
+        anim.SetTrigger(setting.fire);
     }
 
 }
