@@ -33,6 +33,7 @@ public class CameraController : MonoBehaviour
     CamInputSetting camInputSettings;
 
     Camera mainCam;
+    Camera UICam;
     Transform center;
     Transform target;
 
@@ -42,6 +43,7 @@ public class CameraController : MonoBehaviour
         mainCam = Camera.main;
         center = transform.GetChild(0);
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        UICam = mainCam.GetComponentInChildren<Camera>();
     }
 
     void Update()
@@ -77,7 +79,6 @@ public class CameraController : MonoBehaviour
     {
         camXRotate += (Input.GetAxis(camInputSettings.mouseYAxis) * camSettings.mouseX_Sensivity) * -1;
         camYRotate += (Input.GetAxis(camInputSettings.mouseXAxis) * camSettings.mouseY_Sensivity);
-        Debug.Log(camXRotate);
         camXRotate = Mathf.Clamp(camXRotate, camSettings.minClamp, camSettings.maxClamp);
         camYRotate = Mathf.Repeat(camYRotate, 360);
         Vector3 rotatingAngle = new Vector3(camXRotate, camYRotate, 0);
@@ -91,10 +92,14 @@ public class CameraController : MonoBehaviour
         {
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, camSettings.zoomFiledOfView,
                 camSettings.zommSpeed * Time.deltaTime);
+            UICam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, camSettings.zoomFiledOfView,
+                camSettings.zommSpeed * Time.deltaTime);
         }
         else
         {
             mainCam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, camSettings.origrinalZoomFiledOfView,
+                camSettings.zommSpeed * Time.deltaTime);
+            UICam.fieldOfView = Mathf.Lerp(mainCam.fieldOfView, camSettings.origrinalZoomFiledOfView,
                 camSettings.zommSpeed * Time.deltaTime);
         }
     }
